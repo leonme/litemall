@@ -20,8 +20,8 @@ Page({
 
   onShareAppMessage: function() {
     return {
-      title: 'litemall小程序商场',
-      desc: '开源微信小程序商城',
+      title: '小杞特产商城',
+      desc: '小杞特产直营商城，优惠多多，速来选购',
       path: '/pages/index/index'
     }
   },

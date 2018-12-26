@@ -12,12 +12,12 @@ Page({
   data: {
     load_statue: true,
     shopInfo: {
-      name: 'litemall',
-      address: 'https://github.com/linlinjava/litemall',
+      name: '小杞商城',
+      address: 'https://www.xqnxtc.cn',
       latitude: 31.201900,
       longitude: 121.587839,
-      linkPhone: '021-xxxx-xxxx',
-      qqNumber: '738696120'
+      linkPhone: '15702120640',
+      qqNumber: '1134369292'
     },
   },
 

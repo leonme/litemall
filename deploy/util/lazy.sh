@@ -7,10 +7,10 @@
 
 # 请设置云主机的IP地址和账户
 # 例如 ubuntu@122.152.206.172
-REMOTE=
+REMOTE=root@xqnxtc.cn
 # 请设置本地SSH私钥文件id_rsa路径
 # 例如 /home/litemall/id_rsa
-ID_RSA=
+ID_RSA=/Users/leon/.ssh/id_rsa
 
 if test -z "$REMOTE"
 then
@@ -35,11 +35,11 @@ cd $LITEMALL_HOME
 
 # 上传云主机
 cd $LITEMALL_HOME
-scp -i $ID_RSA -r  ./deploy $REMOTE:/home/ubuntu/
+scp -i $ID_RSA -r  ./deploy $REMOTE:/root/git/litemall
 
 # 远程登录云主机并执行reset脚本
 ssh $REMOTE -i $ID_RSA << eeooff
-cd /home/ubuntu
-sudo ./deploy/bin/reset.sh
+cd /root/git/litemall
+sudo sh ./deploy/bin/reset.sh
 exit
 eeooff

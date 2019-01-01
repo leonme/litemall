@@ -10,7 +10,7 @@
 # i. 请在`XXXXXX`处设置相应的root密码
 # ii. 同时请注意root密码放在脚本是非常危险的，因此这里仅仅是用于开发测试阶段。
 ROOT=root
-PASSWORD=
+PASSWORD=Leonme123
 
 if test -z "$PASSWORD"
 then
@@ -19,13 +19,13 @@ then
 fi
 
 # 导入数据
-cd /home/ubuntu/deploy/db
-mysql -h localhost -u $ROOT -p$PASSWORD < litemall.sql
+#cd /root/git/litemall/deploy/db
+#mysql -h localhost -u $ROOT -p$PASSWORD < litemall.sql
 
 # 删除storage文件夹内文件
-cd /home/ubuntu/deploy/litemall/storage
-rm -f ./**
+#cd /root/git/litemall/deploy/litemall/storage
+#rm -f ./**
 
 # 重新部署服务
-cd /home/ubuntu/deploy/bin
-sudo ./deploy.sh
+cd /root/git/litemall/deploy/bin
+sudo sh ./deploy.sh

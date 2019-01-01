@@ -12,16 +12,16 @@ LITEMALL_HOME=$PWD
 echo "LITEMALL_HOME $LITEMALL_HOME"
 
 # 复制数据库
-cat $LITEMALL_HOME/litemall-db/sql/litemall_schema.sql > $LITEMALL_HOME/deploy/db/litemall.sql
-cat $LITEMALL_HOME/litemall-db/sql/litemall_table.sql >> $LITEMALL_HOME/deploy/db/litemall.sql
-cat $LITEMALL_HOME/litemall-db/sql/litemall_data.sql >> $LITEMALL_HOME/deploy/db/litemall.sql
+#cat $LITEMALL_HOME/litemall-db/sql/litemall_schema.sql > $LITEMALL_HOME/deploy/db/litemall.sql
+#cat $LITEMALL_HOME/litemall-db/sql/litemall_table.sql >> $LITEMALL_HOME/deploy/db/litemall.sql
+#cat $LITEMALL_HOME/litemall-db/sql/litemall_data.sql >> $LITEMALL_HOME/deploy/db/litemall.sql
 
 cd $LITEMALL_HOME/litemall-admin
 # 安装阿里node镜像工具
-npm install -g cnpm --registry=https://registry.npm.taobao.org
+#npm install -g cnpm --registry=https://registry.npm.taobao.org
 # 安装node项目依赖环境
 cnpm install
-cnpm run build:dep
+cnpm run build:prod
 
 cd $LITEMALL_HOME
 mvn clean package

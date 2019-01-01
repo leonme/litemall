@@ -31,7 +31,7 @@ echo "LITEMALL_HOME $LITEMALL_HOME"
 
 # 项目打包
 cd $LITEMALL_HOME
-./deploy/util/package.sh
+sh ./deploy/util/package.sh
 
 # 上传云主机
 cd $LITEMALL_HOME

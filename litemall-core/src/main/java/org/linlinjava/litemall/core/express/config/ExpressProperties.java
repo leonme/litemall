@@ -11,6 +11,8 @@ public class ExpressProperties {
     private boolean enable;
     private String appId;
     private String appKey;
+    private String appSecret;
+    private String appCode;
     private List<Map<String, String>> vendors = new ArrayList<>();
 
     public boolean isEnable() {
@@ -43,5 +45,21 @@ public class ExpressProperties {
 
     public void setAppId(String appId) {
         this.appId = appId;
+    }
+
+    public String getAppSecret() {
+        return appSecret;
+    }
+
+    public void setAppSecret(String appSecret) {
+        this.appSecret = appSecret;
+    }
+
+    public String getAppCode() {
+        return appCode;
+    }
+
+    public void setAppCode(String appCode) {
+        this.appCode = appCode;
     }
 }

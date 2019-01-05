@@ -15,22 +15,28 @@ import java.util.List;
  */
 public class ExpressInfo {
 
-    @JsonProperty("LogisticCode")
+    @JsonProperty("number")
     private String LogisticCode;
-    @JsonProperty("ShipperCode")
+    @JsonProperty("expName")
+    private String ShipperName;
+    @JsonProperty("expSite")
+    private String ShipperSite;
+    @JsonProperty("expPhone")
+    private String ShipperPhone;
+    @JsonProperty("type")
     private String ShipperCode;
-    @JsonProperty("Traces")
+    @JsonProperty("list")
     private List<Traces> Traces;
     @JsonProperty("State")
     private String State;
     @JsonProperty("EBusinessID")
     private String EBusinessID;
-    @JsonProperty("Success")
-    private boolean Success;
+    @JsonProperty("deliverystatus")
+    private String Success;
     @JsonProperty("Reason")
     private String Reason;
-
-    private String ShipperName;
+    @JsonProperty("issign")
+    private String IsSign;
 
     public String getLogisticCode() {
         return LogisticCode;
@@ -72,11 +78,11 @@ public class ExpressInfo {
         this.EBusinessID = EBusinessID;
     }
 
-    public boolean getSuccess() {
+    public String getSuccess() {
         return Success;
     }
 
-    public void setSuccess(boolean Success) {
+    public void setSuccess(String Success) {
         this.Success = Success;
     }
 
@@ -96,11 +102,41 @@ public class ExpressInfo {
         ShipperName = shipperName;
     }
 
+    public String getShipperSite() {
+        return ShipperSite;
+    }
+
+    public void setShipperSite(String shipperSite) {
+        ShipperSite = shipperSite;
+    }
+
+    public String getShipperPhone() {
+        return ShipperPhone;
+    }
+
+    public void setShipperPhone(String shipperPhone) {
+        ShipperPhone = shipperPhone;
+    }
+
+    public String isSuccess() {
+        return Success;
+    }
+
+    public String getIsSign() {
+        return IsSign;
+    }
+
+    public void setIsSign(String isSign) {
+        IsSign = isSign;
+    }
+
     @Override
     public String toString() {
         return "ExpressInfo{" +
                 "LogisticCode='" + LogisticCode + '\'' +
                 ", ShipperCode='" + ShipperCode + '\'' +
+                ", ShipperSite='" + ShipperSite + '\'' +
+                ", ShipperPhone='" + ShipperPhone + '\'' +
                 ", Traces=" + Traces +
                 ", State='" + State + '\'' +
                 ", EBusinessID='" + EBusinessID + '\'' +

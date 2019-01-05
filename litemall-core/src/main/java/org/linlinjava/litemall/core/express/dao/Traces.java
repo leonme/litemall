@@ -13,9 +13,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Traces {
 
-    @JsonProperty("AcceptStation")
+    @JsonProperty("status")
     private String AcceptStation;
-    @JsonProperty("AcceptTime")
+    @JsonProperty("time")
     private String AcceptTime;
 
     public String getAcceptStation() {

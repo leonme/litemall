@@ -20,7 +20,7 @@ public class ExpressTest {
     public void test() {
         ExpressInfo ei = null;
         try {
-            ei = expressService.getExpressInfo("YTO", "800669400640887922");
+            ei = expressService.getExpressInfo("TTKDEX", "669574476738");
         } catch (Exception e) {
             e.printStackTrace();
         }

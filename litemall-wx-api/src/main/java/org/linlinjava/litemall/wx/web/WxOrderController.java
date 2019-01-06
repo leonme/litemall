@@ -19,6 +19,7 @@ import org.linlinjava.litemall.core.system.SystemConfig;
 import org.linlinjava.litemall.core.util.DateTimeUtil;
 import org.linlinjava.litemall.core.util.JacksonUtil;
 import org.linlinjava.litemall.core.util.ResponseUtil;
+import org.linlinjava.litemall.core.util.StringConstants;
 import org.linlinjava.litemall.db.domain.*;
 import org.linlinjava.litemall.db.service.*;
 import org.linlinjava.litemall.db.util.CouponUserConstant;
@@ -41,10 +42,7 @@ import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.linlinjava.litemall.wx.util.WxResponseCode.*;
 
@@ -707,13 +705,27 @@ public class WxOrderController {
         // 订单支付成功以后，会发送短信给用户，以及发送邮件给管理员
         notifyService.notifyMail("新订单通知", order.toString());
         // 这里微信的短信平台对参数长度有限制，所以将订单号只截取后6位
-        notifyService.notifySmsTemplateSync(order.getMobile(), NotifyType.PAY_SUCCEED, new String[]{orderSn.substring(8, 14)});
+        //new String[]{orderSn.substring(8, 14)}
+        List<String> goods = new ArrayList<>();
+        List<LitemallOrderGoods> orderGoods = orderGoodsService.queryByOid(order.getId());
+        for (LitemallOrderGoods orderGood: orderGoods) {
+            goods.add(orderGood.getGoodsName() + " " + orderGood.getNumber() + "件");
+        }
+        String[] params = new String[] {
+                orderSn.substring(8, 14),
+                order.getConsignee(),
+                order.getMobile(),
+                order.getAddress(),
+                Arrays.deepToString(goods.toArray())
+        };
+        notifyService.notifySmsTemplateSync(StringConstants.PHONE_KF, NotifyType.DELIVERY, params);
 
         // 请依据自己的模版消息配置更改参数
         String[] parms = new String[]{
                 order.getOrderSn(),
-                order.getOrderPrice().toString(),
                 DateTimeUtil.getDateTimeDisplayString(order.getAddTime()),
+                order.getOrderPrice().toString(),
+                OrderUtil.orderStatusText(order),
                 order.getConsignee(),
                 order.getMobile(),
                 order.getAddress()
@@ -766,6 +778,12 @@ public class WxOrderController {
         //TODO 发送邮件和短信通知，这里采用异步发送
         // 有用户申请退款，邮件通知运营人员
         notifyService.notifyMail("退款申请", order.toString());
+        String[] params = new String[]{
+                order.getConsignee(),
+                order.getOrderSn(),
+                order.getActualPrice().toString()
+        };
+        notifyService.notifySmsTemplate(StringConstants.PHONE_KF, NotifyType.REFUND, params);
 
         return ResponseUtil.ok();
     }

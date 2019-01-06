@@ -4,6 +4,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.linlinjava.litemall.core.notify.NotifyService;
 import org.linlinjava.litemall.core.notify.NotifyType;
+import org.linlinjava.litemall.core.util.StringConstants;
+import org.linlinjava.litemall.db.domain.LitemallOrder;
+import org.linlinjava.litemall.db.domain.LitemallOrderGoods;
+import org.linlinjava.litemall.db.service.LitemallOrderGoodsService;
+import org.linlinjava.litemall.db.service.LitemallOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +19,9 @@ import org.springframework.core.task.SyncTaskExecutor;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.Executor;
 
 /**
@@ -35,6 +43,12 @@ public class SmsTest {
     @Autowired
     private NotifyService notifyService;
 
+    @Autowired
+    private LitemallOrderGoodsService orderGoodsService;
+
+    @Autowired
+    private LitemallOrderService orderService;
+
     @Test
     public void testCaptcha() {
         String phone = "xxxxxxxxxxx";
@@ -45,10 +59,20 @@ public class SmsTest {
 
     @Test
     public void testPaySucceed() {
-        String phone = "xxxxxxxxxxx";
-        String[] params = new String[]{"123456"};
-
-        notifyService.notifySmsTemplate(phone, NotifyType.PAY_SUCCEED, params);
+        LitemallOrder order = orderService.findById(33);
+        List<String> goods = new ArrayList<>();
+        List<LitemallOrderGoods> orderGoods = orderGoodsService.queryByOid(order.getId());
+        for (LitemallOrderGoods orderGood: orderGoods) {
+            goods.add(orderGood.getGoodsName() + " " + orderGood.getNumber() + "件");
+        }
+        String[] params = new String[] {
+                order.getOrderSn().substring(8, 14),
+                order.getConsignee(),
+                order.getMobile(),
+                order.getAddress(),
+                Arrays.deepToString(goods.toArray())
+        };
+        notifyService.notifySmsTemplateSync(StringConstants.PHONE_ME, NotifyType.DELIVERY, params);
     }
 
     @Test
@@ -61,10 +85,14 @@ public class SmsTest {
 
     @Test
     public void testRefund() {
-        String phone = "xxxxxxxxxxx";
-        String[] params = new String[]{"123456"};
-
-        notifyService.notifySmsTemplate(phone, NotifyType.REFUND, params);
+        LitemallOrder order = orderService.findById(33);
+        notifyService.notifyMail("退款申请", order.toString());
+        String[] params = new String[]{
+                order.getConsignee(),
+                order.getOrderSn(),
+                order.getActualPrice().toString()
+        };
+        notifyService.notifySmsTemplate(StringConstants.PHONE_KF, NotifyType.REFUND, params);
     }
 
     @Configuration

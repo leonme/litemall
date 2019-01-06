@@ -70,9 +70,9 @@ public class SmsTest {
                 order.getConsignee(),
                 order.getMobile(),
                 order.getAddress(),
-                Arrays.deepToString(goods.toArray())
+                Arrays.toString(goods.toArray())
         };
-        notifyService.notifySmsTemplateSync(StringConstants.PHONE_ME, NotifyType.DELIVERY, params);
+        notifyService.notifySmsTemplateSync(StringConstants.PHONE_KF, NotifyType.PAY_SUCCEED, params);
     }
 
     @Test

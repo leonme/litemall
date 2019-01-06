@@ -3,6 +3,8 @@ package org.linlinjava.litemall.core;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.linlinjava.litemall.core.notify.NotifyService;
+import org.linlinjava.litemall.db.domain.LitemallOrder;
+import org.linlinjava.litemall.db.service.LitemallOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
@@ -33,9 +35,14 @@ public class MailTest {
     @Autowired
     private NotifyService notifyService;
 
+    @Autowired
+    private LitemallOrderService orderService;
+
     @Test
     public void testMail() {
-        notifyService.notifyMail("订单信息", "订单1111111已付款，请发货");
+//        notifyService.notifyMail("订单信息", "订单1111111已付款，请发货");
+        LitemallOrder order = orderService.findById(33);
+        notifyService.notifyMail("新订单通知", order.toString());
     }
 
     @Configuration

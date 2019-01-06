@@ -712,11 +712,11 @@ public class WxOrderController {
             goods.add(orderGood.getGoodsName() + " " + orderGood.getNumber() + "件");
         }
         String[] params = new String[] {
-                orderSn.substring(8, 14),
+                order.getOrderSn().substring(8, 14),
                 order.getConsignee(),
                 order.getMobile(),
                 order.getAddress(),
-                Arrays.deepToString(goods.toArray())
+                Arrays.toString(goods.toArray())
         };
         notifyService.notifySmsTemplateSync(StringConstants.PHONE_KF, NotifyType.DELIVERY, params);
 
